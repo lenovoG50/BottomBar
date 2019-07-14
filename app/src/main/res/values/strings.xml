@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BottomBar</string>
+    <string name="fragment_tab1">第一个fragment</string>
+    <string name="fragment_tab2">第二个fragment</string>
+    <string name="fragment_tab3">第三个fragment</string>
+    <string name="adapter_tab1">图片</string>
+</resources>
