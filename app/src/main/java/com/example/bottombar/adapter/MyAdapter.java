@@ -20,13 +20,12 @@ import java.util.List;
  * Description:新生成的类
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private final List<HomeBean.ResultBean.DataBean> resultList;
-    private final Context context;
+    private List<HomeBean.ResultBean.DataBean> resultList;
+    private Context context;
 
     public MyAdapter(List<HomeBean.ResultBean.DataBean> resultList, Context context) {
         this.resultList = resultList;
         this.context = context;
-
     }
 
     @NonNull
@@ -39,21 +38,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.ViewHolder viewHolder, int i) {
-        Glide.with(context).load(resultList.get(i).getUrl()).into(viewHolder.img);
+        Glide.with(context).load(resultList.get(i).getThumbnail_pic_s()).error(R.drawable.my1).into(viewHolder.img);
         viewHolder.tv.setText(resultList.get(i).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return resultList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView img;
-        private final TextView tv;
+        private ImageView img;
+        private TextView tv;
 
-        ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
             tv = itemView.findViewById(R.id.title);

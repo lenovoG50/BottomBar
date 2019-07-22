@@ -1,10 +1,10 @@
 package com.example.bottombar;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.bottombar.fragment.TabFragment1;
 import com.example.bottombar.fragment.TabFragment2;
@@ -12,6 +12,7 @@ import com.example.bottombar.fragment.TabFragment3;
 
 import java.util.ArrayList;
 
+import cn.jzvd.JZVideoPlayer;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 
@@ -26,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
         PageNavigationView pgv = findViewById(R.id.pgv);
         NavigationController controller = pgv.material()
-                .addItem(R.drawable.home, R.drawable.home1, "首页")
-                .addItem(R.drawable.video, R.drawable.video1, "视频")
-                .addItem(R.drawable.my, R.drawable.my1, "我的")
+                .addItem(R.drawable.home, R.drawable.home1, "首页", getResources().getColor(R.color.bottomBar))
+                .addItem(R.drawable.video, R.drawable.video1, "视频", getResources().getColor(R.color.bottomBar))
+                .addItem(R.drawable.my, R.drawable.my1, "我的", getResources().getColor(R.color.bottomBar))
                 .build();
         ViewPager vp = findViewById(R.id.vp);
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -46,10 +47,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-
         fragmentList.add(new TabFragment1());
         fragmentList.add(new TabFragment2());
         fragmentList.add(new TabFragment3());
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

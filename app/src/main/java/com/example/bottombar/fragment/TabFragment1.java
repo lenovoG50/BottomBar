@@ -1,8 +1,6 @@
 package com.example.bottombar.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -34,15 +32,6 @@ import java.util.List;
 public class TabFragment1 extends Fragment implements HttpListener<String> {
     private RecyclerView rcv;
 
-   private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            rcv.setLayoutManager(new LinearLayoutManager(getActivity()));
-            rcv.setAdapter(new MyAdapter(resultList, getActivity()));
-        }
-    };
-    private List<HomeBean.ResultBean.DataBean> resultList;
     private View view;
 
     @Nullable
@@ -62,14 +51,15 @@ public class TabFragment1 extends Fragment implements HttpListener<String> {
 
     @Override
     public void onSuccesed(int what, Response response) {
-            Gson gson = new Gson();
-            String data = response.get().toString();
-            resultList = gson.fromJson(data, HomeBean.class).getResult().getData();
-            handler.sendEmptyMessage(0);
+        Gson gson = new Gson();
+        String data = response.get().toString();
+        List<HomeBean.ResultBean.DataBean> resultList = gson.fromJson(data, HomeBean.class).getResult().getData();
+        rcv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rcv.setAdapter(new MyAdapter(resultList, getActivity()));
     }
 
     @Override
     public void onFailed(int what, Response response) {
-        Snackbar.make(view,"请求失败",Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "请求失败", Snackbar.LENGTH_LONG).show();
     }
 }
